@@ -5,181 +5,187 @@
         <mat-card-title>Call Test Report</mat-card-title>
       </div>
     </div>
-    <div class="row pt-10">
-      <div class="col-sm-4">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>UE Number</mat-label>
-          <input
-            matInput
-            placeholder="UE Number"
-            formControlName="ueNumber"
-            name="ueNumber"
-          />
-        </mat-form-field>
+    <form [formGroup]="callTestForm">
+      <div class="row pt-10">
+        <div class="col-sm-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>UE Number</mat-label>
+            <input
+              matInput
+              placeholder="UE Number"
+              formControlName="ueNumber"
+              name="ueNumber"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Site Name</mat-label>
+            <input
+              matInput
+              placeholder="Site Name"
+              formControlName="siteName"
+              name="siteName"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Site ID</mat-label>
+            <input
+              matInput
+              placeholder="Site ID"
+              formControlName="siteId"
+              name="siteId"
+            />
+          </mat-form-field>
+        </div>
       </div>
-      <div class="col-sm-4">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Site Name</mat-label>
-          <input
-            matInput
-            placeholder="Site Name"
-            formControlName="siteName"
-            name="siteName"
-          />
-        </mat-form-field>
-      </div>
-      <div class="col-sm-4">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Site ID</mat-label>
-          <input
-            matInput
-            placeholder="Site ID"
-            formControlName="siteId"
-            name="siteId"
-          />
-        </mat-form-field>
-      </div>
-    </div>
 
-    <div class="row pt-10">
-      <div class="col-sm-4">
-        <div>
-          <input
-            type="file"
-            multiple
-            hidden
-            (change)="onAlphaFileChange($event)"
-            #fileAlphaInput
-            accept="image/*"
-          />
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="fileAlphaInput.click()"
-          >
-            <mat-icon>attach_file</mat-icon>Select Alpha images
-          </button>
-        </div>
-        <div class="attachments">
-          <div *ngFor="let file of attachedAlphaFiles" class="attached-file">
-            <a class="file-name" (click)="downloadFile(file.originalName)">
-              {{ file.name }} ({{ file.size }})
-            </a>
-            <span
-              class="clear-attachment"
-              (click)="removeAttachment(this.attachedAlphaFiles, file.name)"
+      <div class="row pt-10">
+        <div class="col-sm-4">
+          <div>
+            <input
+              type="file"
+              multiple
+              hidden
+              (change)="onAlphaFileChange($event)"
+              #fileAlphaInput
+              accept="image/*"
+            />
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="fileAlphaInput.click()"
             >
-              &times;
-            </span>
+              <mat-icon>attach_file</mat-icon>Select Alpha images
+            </button>
+          </div>
+          <div class="attachments">
+            <div *ngFor="let file of attachedAlphaFiles" class="attached-file">
+              <a class="file-name" (click)="downloadFile(file.originalName)">
+                {{ file.name }} ({{ file.size }})
+              </a>
+              <span
+                class="clear-attachment"
+                (click)="removeAttachment(this.attachedAlphaFiles, file.name)"
+              >
+                &times;
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div>
+            <input
+              type="file"
+              multiple
+              hidden
+              (change)="onBetaFileChange($event)"
+              #fileBetaInput
+              accept="image/*"
+            />
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="fileBetaInput.click()"
+            >
+              <mat-icon>attach_file</mat-icon>Select Beta images
+            </button>
+          </div>
+          <div class="attachments">
+            <div *ngFor="let file of attachedBetaFiles" class="attached-file">
+              <a class="file-name" (click)="downloadFile(file.originalName)">
+                {{ file.name }} ({{ file.size }})
+              </a>
+              <span
+                class="clear-attachment"
+                (click)="removeAttachment(this.attachedBetaFiles, file.name)"
+              >
+                &times;
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div>
+            <input
+              type="file"
+              multiple
+              hidden
+              (change)="onGammaFileChange($event)"
+              #fileGammaInput
+              accept="image/*"
+            />
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="fileGammaInput.click()"
+            >
+              <mat-icon>attach_file</mat-icon>Select Gamma images
+            </button>
+          </div>
+          <div class="attachments">
+            <div *ngFor="let file of attachedGammaFiles" class="attached-file">
+              <a class="file-name" (click)="downloadFile(file.originalName)">
+                {{ file.name }} ({{ file.size }})
+              </a>
+              <span
+                class="clear-attachment"
+                (click)="removeAttachment(this.attachedGammaFiles, file.name)"
+              >
+                &times;
+              </span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-sm-4">
-        <div>
-          <input
-            type="file"
-            multiple
-            hidden
-            (change)="onBetaFileChange($event)"
-            #fileBetaInput
-            accept="image/*"
-          />
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="fileBetaInput.click()"
-          >
-            <mat-icon>attach_file</mat-icon>Select Beta images
-          </button>
-        </div>
-        <div class="attachments">
-          <div *ngFor="let file of attachedBetaFiles" class="attached-file">
-            <a class="file-name" (click)="downloadFile(file.originalName)">
-              {{ file.name }} ({{ file.size }})
-            </a>
-            <span
-              class="clear-attachment"
-              (click)="removeAttachment(this.attachedBetaFiles, file.name)"
-            >
-              &times;
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div>
-          <input
-            type="file"
-            multiple
-            hidden
-            (change)="onGammaFileChange($event)"
-            #fileGammaInput
-            accept="image/*"
-          />
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="fileGammaInput.click()"
-          >
-            <mat-icon>attach_file</mat-icon>Select Gamma images
-          </button>
-        </div>
-        <div class="attachments">
-          <div *ngFor="let file of attachedGammaFiles" class="attached-file">
-            <a class="file-name" (click)="downloadFile(file.originalName)">
-              {{ file.name }} ({{ file.size }})
-            </a>
-            <span
-              class="clear-attachment"
-              (click)="removeAttachment(this.attachedGammaFiles, file.name)"
-            >
-              &times;
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="row pt-10">
-      <div class="col-sm-4">
-        <div>
-          <input
-            type="file"
-            hidden
-            (change)="onTextFileChange($event)"
-            #filetxtInput
-            accept=".txt"
-          />
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="filetxtInput.click()"
-          >
-            <mat-icon>attach_file</mat-icon>Select Text File
-          </button>
-        </div>
-        <div class="attachments">
-          <div *ngFor="let file of attachedTextFiles" class="attached-file">
-            <a class="file-name" (click)="downloadFile(file.originalName)">
-              {{ file.name }} ({{ file.size }})
-            </a>
-            <span
-              class="clear-attachment"
-              (click)="removeAttachment(this.attachedTextFiles, file.name)"
+      <div class="row pt-10">
+        <div class="col-sm-4">
+          <div>
+            <input
+              type="file"
+              hidden
+              (change)="onTextFileChange($event)"
+              #filetxtInput
+              accept=".txt"
+            />
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="filetxtInput.click()"
             >
-              &times;
-            </span>
+              <mat-icon>attach_file</mat-icon>Select Text File
+            </button>
+          </div>
+          <div class="attachments">
+            <div *ngFor="let file of attachedTextFiles" class="attached-file">
+              <a class="file-name" (click)="downloadFile(file.originalName)">
+                {{ file.name }} ({{ file.size }})
+              </a>
+              <span
+                class="clear-attachment"
+                (click)="removeAttachment(this.attachedTextFiles, file.name)"
+              >
+                &times;
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="row pt-10 d-flex justify-content-end">
-      <div class="col-sm-3">
-        <button mat-raised-button color="warn">
-          <mat-icon>download</mat-icon>Download File
-        </button>
+      <div class="row pt-10 d-flex justify-content-end">
+        <div class="col-sm-3">
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="onDownloadExcelFile()"
+          >
+            <mat-icon>download</mat-icon>Download File
+          </button>
+        </div>
       </div>
-    </div>
+    </form>
   </mat-card-content>
 </mat-card>
