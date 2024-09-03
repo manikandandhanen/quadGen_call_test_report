@@ -4,15 +4,30 @@ import { TablerIconsModule } from 'angular-tabler-icons';
 import { ImageFileService } from 'src/app/services/image-file.service';
 import { CommonModule } from '@angular/common';
 import { createWorker, Worker } from 'tesseract.js';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-image-converter',
   standalone: true,
-  imports: [MaterialModule, TablerIconsModule, CommonModule],
+  imports: [
+    MaterialModule,
+    TablerIconsModule,
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+  ],
   templateUrl: './image-converter.component.html',
   styleUrls: ['./image-converter.component.scss'],
 })
 export class ImageConverterComponent {
+  callTestForm: FormGroup;
+
   attachedAlphaFiles: Array<{
     name: string;
     originalName: string;
@@ -35,9 +50,14 @@ export class ImageConverterComponent {
     size: string;
   }> = [];
 
-  constructor(private imageFileService: ImageFileService) {}
+  constructor(
+    private imageFileService: ImageFileService,
+    private fb: FormBuilder
+  ) {
+    this.callTestFormGroup();
+  }
 
-  onAlphaFileChange(event: any) {
+  async onAlphaFileChange(event: any) {
     for (let rawFile of event.target.files) {
       const reader = new FileReader();
       reader.onload = async () => {
@@ -59,7 +79,7 @@ export class ImageConverterComponent {
     }
   }
 
-  onBetaFileChange(event: any) {
+  async onBetaFileChange(event: any) {
     for (let rawFile of event.target.files) {
       const reader = new FileReader();
       reader.onload = async () => {
@@ -81,7 +101,7 @@ export class ImageConverterComponent {
     }
   }
 
-  onGammaFileChange(event: any) {
+  async onGammaFileChange(event: any) {
     for (let rawFile of event.target.files) {
       const reader = new FileReader();
       reader.onload = async () => {
@@ -103,7 +123,7 @@ export class ImageConverterComponent {
     }
   }
 
-  onTextFileChange(event: any) {
+  async onTextFileChange(event: any) {
     for (let rawFile of event.target.files) {
       const reader = new FileReader();
       reader.onload = async () => {
@@ -172,5 +192,23 @@ export class ImageConverterComponent {
     const { data } = await worker.recognize(imageBase64);
     await worker.terminate();
     return data.text;
+  }
+
+  onDownloadExcelFile() {
+    if (this.callTestForm.invalid) {
+      this.callTestForm.markAllAsTouched();
+      return;
+    }
+    const callTestData = this.callTestForm.value;
+    console.log(callTestData);
+    //this.callTestForm.reset();
+  }
+
+  callTestFormGroup() {
+    this.callTestForm = this.fb.group({
+      ueNumber: ['', [Validators.required]],
+      siteName: ['', [Validators.required]],
+      siteId: ['', [Validators.required]],
+    });
   }
 }
